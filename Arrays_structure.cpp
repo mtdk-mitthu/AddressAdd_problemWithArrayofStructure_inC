@@ -17,7 +17,8 @@ int main() {
         printf("2. Display Entries\n");
         printf("3. Search by Name\n");
         printf("4. Edit Entry by Name\n");
-        printf("5. Quit\n");
+        printf("5. Delete Entry by Name\n");
+        printf("6. Quit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -103,6 +104,34 @@ int main() {
                 break;
 
             case 5:
+                if (numEntries > 0) {
+                    char deleteName[100];
+                    printf("Enter the name to delete: ");
+                    scanf("%s", deleteName);
+                    int found = 0;
+                    for (int i = 0; i < numEntries; i++) {
+                        if (strcmp(deleteName, addressBook[i].name) == 0) {
+                            // Shift entries to remove the entry to be deleted
+                            for (int j = i; j < numEntries - 1; j++) {
+                                strcpy(addressBook[j].name, addressBook[j + 1].name);
+                                addressBook[j].age = addressBook[j + 1].age;
+                                strcpy(addressBook[j].phone, addressBook[j + 1].phone);
+                            }
+                            numEntries--;
+                            printf("Entry deleted successfully.\n");
+                            found = 1;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        printf("No matching entry found for %s\n", deleteName);
+                    }
+                } else {
+                    printf("Address book is empty.\n");
+                }
+                break;
+
+            case 6:
                 printf("Exiting the program. Goodbye!\n");
                 return 0;
 
